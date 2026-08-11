@@ -26,9 +26,9 @@ const CreateNote = () => {
             dispatch(createNote({
                 title,
                 description
-            })).upwrap
+            }))
 
-            dispatch(getAllNotes()).upwrap()
+            dispatch(getAllNotes())
             setTitle("");
             setDescription("");
 
