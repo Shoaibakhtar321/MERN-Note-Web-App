@@ -7,17 +7,20 @@ import Trash from "./pages/Trash";
 import Setting from "./pages/Setting";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import { Provider } from 'react-redux'
+import { store } from "./redux/store";
 
 function App() {
   return (
     <>
-      <div className="w-screen h-screen bg-background text-text flex">
-        <div className=" h-full flex-1">
-          <Sidebar />
-        </div>
-        <div className="flex-6 flex flex-col">
-          <Navbar />
-          <div className="w-full h-full p-8">
+      <Provider store={store}>
+        <div className="w-screen h-screen bg-background text-text flex">
+          <div className=" h-full flex-1">
+            <Sidebar />
+          </div>
+          <div className="flex-6 flex flex-col">
+            <Navbar />
+            <div className="w-full h-full p-8">
               <Routes>
                 <Route path="/" element={<AllNotes />} />
                 <Route path="/pinned" element={<Pinned />} />
@@ -25,9 +28,10 @@ function App() {
                 <Route path="/trash" element={<Trash />} />
                 <Route path="/setting" element={<Setting />} />
               </Routes>
+            </div>
           </div>
         </div>
-      </div>
+      </Provider>
     </>
   );
 }
