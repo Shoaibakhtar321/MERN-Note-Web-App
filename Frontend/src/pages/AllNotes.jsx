@@ -1,16 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PageTitle from "../components/PageTitle";
 import NoteCard from "../components/NoteCard";
 import { getAllNotes } from '../redux/features/getAllNotesSlice'
 import { useDispatch, useSelector } from 'react-redux'
-
-import axios from "axios";
+import { MdAdd } from "react-icons/md";
+import CreateNote from "./CreateNote";
 
 const AllNotes = () => {
 
   const [colorCode, setColorCode] = useState()
   const dispatch = useDispatch()
   const { notes, loading, error } = useSelector((state) => state.allNotes)
+  const [showCreateNote, setShowCreateNote] = useState(false)
+
+  const noteRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (noteRef.current && !noteRef.current.contains(event.target)) {
+        setShowCreateNote(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
 
   useEffect(() => {
     dispatch(getAllNotes())
@@ -20,8 +38,19 @@ const AllNotes = () => {
   if (error) return <h2>Error: {error}</h2>;
   return (
     <div className="h-full text-text">
-      <div>
+      <div className="flex justify-between items-center">
         <PageTitle title={"All Notes"} count={`Total Notes: ${notes.length}`} />
+        <div className="relative" >
+          <button onClick={() => setShowCreateNote((prev) => !prev)}>
+            <MdAdd size={50} className="p-1 bg-primary text-white rounded-full text-center hover:cursor-pointer active:scale-95" />
+          </button>
+          {showCreateNote && (
+            <div className="absolute right-5 top-full z-50" >
+              <CreateNote />
+            </div>
+          )}
+
+        </div>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
         {notes.length === 0 ? (<p>No notes found.</p>) : (
