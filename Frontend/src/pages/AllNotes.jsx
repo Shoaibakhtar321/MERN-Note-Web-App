@@ -32,7 +32,7 @@ const AllNotes = () => {
 
   useEffect(() => {
     dispatch(getAllNotes())
-  }, [dispatch])
+  }, [])
 
   if (loading) return <h2>Loading....</h2>
   if (error) return <h2>Error: {error}</h2>;

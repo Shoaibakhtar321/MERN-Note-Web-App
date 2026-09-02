@@ -8,9 +8,9 @@ import { FaEdit } from "react-icons/fa";
 import { VscRepoPinned } from "react-icons/vsc";
 import { FaArchive } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
-
-
-
+import { deleteNote } from '../api/notesApi'
+import { getAllNotes } from '../redux/features/getAllNotesSlice'
+import { useDispatch } from "react-redux";
 
 const menuStyle =
   "w-full text-base px-4 py-2 flex gap-2 items-center text-left hover:bg-gray-100";
@@ -39,21 +39,7 @@ const NoteCard = ({ data, index, id }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-
-
-  const pinNote = async () => {
-    try {
-      const { data } = await axios.patch(
-        `http://localhost:3000/notes/${id}/pin`
-      );
-      setPinned(data.data.isPinned);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-
+  const dispatch = useDispatch()
 
   return (
     <div
@@ -65,7 +51,7 @@ const NoteCard = ({ data, index, id }) => {
             <h3 className="text-xl font-medium">{data.title}</h3>
           </div>
           <div className="flex gap-3 items-center text-xl">
-            <VscPinned className={`cursor-pointer ${pinned ? 'text-red-500' : 'text-black'}`} onClick={pinNote}
+            <VscPinned className={`cursor-pointer text-black`}
             />
 
             <div className="relative inline-block" ref={menuRef}>
@@ -88,7 +74,12 @@ const NoteCard = ({ data, index, id }) => {
                     <FaArchive />
                     <span>Archive</span>
                   </div>
-                  <div className={`${menuStyle} text-red-600/70`}>
+                  <div className={`${menuStyle} text-red-600/70`} onClick={(e) => {
+                    e.stopPropagation()
+                    deleteNote(data._id)
+                    setOpen(false)
+                    dispatch(getAllNotes())
+                  }}>
                     <FaTrashAlt />
                     <span>Delete</span>
                   </div>
