@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createNoteApi, deleteNote, getNotes } from "../../api/notesApi";
+import {
+  createNoteApi,
+  deleteNote,
+  getNotes,
+  pinNote,
+} from "../../api/notesApi";
 
 export const get_notes = createAsyncThunk("notes/getNotes", async () => {
   const response = await getNotes();
@@ -23,13 +28,26 @@ export const create_note = createAsyncThunk(
 export const delete_note = createAsyncThunk(
   "notes/deleteNote",
   async (id, ThunkAPI) => {
-    console.log(id);
     try {
       const response = await deleteNote(id);
       return response;
     } catch (error) {
       return ThunkAPI.rejectWithValue(
         error.response?.data?.message || "Faild to delete note...",
+      );
+    }
+  },
+);
+
+export const pin_note = createAsyncThunk(
+  "note/pinNote",
+  async (id, ThunkAPI) => {
+    try {
+      const response = await pinNote(id);
+      return response;
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to pin note...",
       );
     }
   },
@@ -68,6 +86,14 @@ const getNotesSlice = createSlice({
         state.notes = state.notes.filter(
           (note) => note._id !== action.payload.deletedNote._id,
         );
+      })
+      .addCase(pin_note.fulfilled, (state, action) => {
+        const updatedNote = action.payload;
+
+        const index = state.notes.findIndex(
+          (note) => note._id == updatedNote.data._id,
+        );
+        state.notes[index] = updatedNote.data;
       });
   },
 });

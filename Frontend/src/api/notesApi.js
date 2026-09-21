@@ -17,3 +17,8 @@ export const deleteNote = async (id) => {
   const response = await axios.delete(`${API_KEY}/note/${id}`);
   return response.data;
 };
+
+export const pinNote = async (id) => {
+  const response = await axios.patch(`${API_KEY}/note/pin/${id}`);
+  return response.data;
+};
