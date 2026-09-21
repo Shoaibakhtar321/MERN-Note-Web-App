@@ -9,18 +9,6 @@ const Pinned = () => {
   const [pinnedNotes, setPinnedNotes] = useState([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-  const fetchPinnedNotes = async () => {
-    try {
-      const { data } = await axios.get("http://localhost:3000/notes/pinned");
-      setPinnedNotes(data.data); 
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchPinnedNotes();
-}, []);
 
   if (loading) return <h2>Loading....</h2>
 

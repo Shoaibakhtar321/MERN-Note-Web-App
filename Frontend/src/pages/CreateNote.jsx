@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { createNote } from '../redux/features/createNoteSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllNotes } from '../redux/features/getAllNotesSlice'
 
 
 
@@ -12,7 +10,6 @@ const CreateNote = () => {
     const [description, setDescription] = useState('')
 
     const dispatch = useDispatch()
-    const { error, loading, note } = useSelector((state) => state.createNote)
 
 
 

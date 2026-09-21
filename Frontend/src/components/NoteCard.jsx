@@ -9,7 +9,6 @@ import { VscRepoPinned } from "react-icons/vsc";
 import { FaArchive } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { deleteNote } from '../api/notesApi'
-import { getAllNotes } from '../redux/features/getAllNotesSlice'
 import { useDispatch } from "react-redux";
 
 const menuStyle =
