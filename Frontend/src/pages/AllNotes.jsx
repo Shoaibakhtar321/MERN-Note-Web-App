@@ -7,12 +7,10 @@ import CreateNote from "./CreateNote";
 import { get_notes } from "../redux/features/getAllNotesSlice";
 
 const AllNotes = () => {
-  const [colorCode, setColorCode] = useState();
   const dispatch = useDispatch();
   const [showCreateNote, setShowCreateNote] = useState(false);
 
-  const { notes, loading, error } = useSelector((state) => state.notesReducer);
-  // console.log(notes);
+  const { notes, loading, error, } = useSelector((state) => state.notesReducer);
 
   const noteRef = useRef(null);
 

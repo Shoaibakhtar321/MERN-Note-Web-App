@@ -1,31 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { VscPinned } from "react-icons/vsc";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { IoCopyOutline, IoReturnUpBack } from "react-icons/io5";
+import { IoCopyOutline } from "react-icons/io5";
 
 import { FaEdit } from "react-icons/fa";
-import { VscRepoPinned } from "react-icons/vsc";
 import { FaArchive } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
-import { deleteNote } from '../api/notesApi'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { delete_note } from "../redux/features/getAllNotesSlice";
 
 const menuStyle =
   "w-full text-base px-4 py-2 flex gap-2 items-center text-left hover:bg-gray-100";
 
-
 const NoteCard = ({ data, index, id }) => {
-
 
   const date = new Date(data.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
-    weekday: "short"
+    weekday: "short",
   });
   const [open, setOpen] = useState(false);
-  const [pinned, setPinned] = useState(data.isPinned)
 
   const menuRef = useRef(null);
 
@@ -38,11 +33,11 @@ const NoteCard = ({ data, index, id }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <div
-      className={`p-4 my-4 rounded-2xl flex flex-col justify-between bg-amber-50`}
+      className={`p-4 my-4 rounded-2xl flex flex-col justify-between bg-amber-100`}
     >
       <div className="flex flex-col justify-between items-start gap-1">
         <div className=" flex w-full justify-between ">
@@ -50,8 +45,7 @@ const NoteCard = ({ data, index, id }) => {
             <h3 className="text-xl font-medium">{data.title}</h3>
           </div>
           <div className="flex gap-3 items-center text-xl">
-            <VscPinned className={`cursor-pointer text-black`}
-            />
+            <VscPinned className={`cursor-pointer text-black`} />
 
             <div className="relative inline-block" ref={menuRef}>
               <BsThreeDotsVertical
@@ -73,12 +67,14 @@ const NoteCard = ({ data, index, id }) => {
                     <FaArchive />
                     <span>Archive</span>
                   </div>
-                  <div className={`${menuStyle} text-red-600/70`} onClick={(e) => {
-                    e.stopPropagation()
-                    deleteNote(data._id)
-                    setOpen(false)
-                    dispatch(getAllNotes())
-                  }}>
+                  <div
+                    className={`${menuStyle} text-red-600/70`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOpen(false);
+                      dispatch(delete_note(data._id));
+                    }}
+                  >
                     <FaTrashAlt />
                     <span>Delete</span>
                   </div>

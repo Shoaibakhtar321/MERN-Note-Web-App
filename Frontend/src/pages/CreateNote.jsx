@@ -1,3 +1,4 @@
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { create_note } from "../redux/features/getAllNotesSlice";
@@ -6,6 +7,8 @@ const CreateNote = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  const { createLoading } = useSelector((state) => state.notesReducer);
+  
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
@@ -15,7 +18,7 @@ const CreateNote = () => {
         return;
       }
 
-      dispatch(create_note({title, description}));
+      dispatch(create_note({ title, description }));
       setTitle("");
       setDescription("");
     } catch (error) {
@@ -45,7 +48,7 @@ const CreateNote = () => {
           type="submit"
           className="bg-primary py-3 rounded-2xl text-white font-medium active:scale-99 hover:cursor-pointer"
         >
-          Create
+          {createLoading ? 'Creating Note...' : "Create"}
         </button>
       </form>
     </div>
