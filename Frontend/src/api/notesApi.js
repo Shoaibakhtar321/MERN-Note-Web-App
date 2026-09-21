@@ -8,11 +8,8 @@ export const getNotes = async () => {
   return response.data;
 };
 
-export const createNoteApi = async (title, description) => {
-  const response = await axios.post(`${API_KEY}/create-note`, {
-    title,
-    description,
-  });
+export const createNoteApi = async (note) => {
+  const response = await axios.post(`${API_KEY}/create-note`, note);
   return response.data;
 };
 
