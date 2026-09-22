@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import PageTitle from "../components/PageTitle";
 import NoteCard from "../components/NoteCard";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,7 @@ const AllNotes = () => {
   const dispatch = useDispatch();
   const [showCreateNote, setShowCreateNote] = useState(false);
 
-  const { notes, loading, error, } = useSelector((state) => state.notesReducer);
+  const { notes, loading, error } = useSelector((state) => state.notesReducer);
 
   const noteRef = useRef(null);
 

@@ -8,12 +8,16 @@ import { FaEdit } from "react-icons/fa";
 import { FaArchive } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { delete_note, pin_note } from "../redux/features/getAllNotesSlice";
+import {
+  archive_note,
+  delete_note,
+  pin_note,
+} from "../redux/features/getAllNotesSlice";
 
 const menuStyle =
   "w-full text-base px-4 py-2 flex gap-2 items-center text-left hover:bg-gray-100";
 
-const NoteCard = ({ data, index, id }) => {
+const NoteCard = ({ data}) => {
   const date = new Date(data.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -66,7 +70,7 @@ const NoteCard = ({ data, index, id }) => {
               />
 
               {open && (
-                <div className="absolute right-2 w-30 bg-background rounded-lg shadow-lg z-50 select-none cursor-pointer">
+                <div className="absolute right-2 w-35 bg-background rounded-lg shadow-lg z-50 select-none cursor-pointer">
                   <div className={menuStyle}>
                     <FaEdit />
                     <span>Edit</span>
@@ -85,9 +89,12 @@ const NoteCard = ({ data, index, id }) => {
                     )}
                     <span>{data.isPinned ? "Unpin" : "Pin"}</span>
                   </div>
-                  <div className={menuStyle}>
+                  <div
+                    className={menuStyle}
+                    onClick={() => dispatch(archive_note(data._id))}
+                  >
                     <FaArchive />
-                    <span>Archive</span>
+                    <span>{data.isArchived ? "Unarchive" : "Archive"}</span>
                   </div>
                   <div
                     className={`${menuStyle} text-red-600/70`}

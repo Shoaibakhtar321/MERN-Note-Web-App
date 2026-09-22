@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  archiveNote,
   createNoteApi,
   deleteNote,
   getNotes,
+  getPinnedNotes,
   pinNote,
 } from "../../api/notesApi";
 
@@ -53,10 +55,30 @@ export const pin_note = createAsyncThunk(
   },
 );
 
+export const archive_note = createAsyncThunk(
+  "note/archive",
+  async (id, ThunkAPI) => {
+    try {
+      const response = await archiveNote(id);
+      return response;
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to archive note...",
+      );
+    }
+  },
+);
+
+export const get_pinned_notes = createAsyncThunk("notes/pinned", async () => {
+  const response = await getPinnedNotes();
+  return response.data;
+});
+
 const getNotesSlice = createSlice({
   name: "notes",
   initialState: {
     notes: [],
+    pinnedNotes: [],
     loading: false,
     error: null,
     createLoading: false,
@@ -64,6 +86,7 @@ const getNotesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      /* GET ALL NOTES */
       .addCase(get_notes.pending, (state) => {
         state.loading = true;
       })
@@ -75,6 +98,7 @@ const getNotesSlice = createSlice({
         state.error = "Something went wrong";
         state.loading = false;
       })
+      /* CREATE NOTE */
       .addCase(create_note.pending, (state) => {
         state.createLoading = true;
       })
@@ -82,18 +106,49 @@ const getNotesSlice = createSlice({
         state.createLoading = false;
         state.notes.unshift(action.payload);
       })
+      /* DELETE NOTE */
       .addCase(delete_note.fulfilled, (state, action) => {
-        state.notes = state.notes.filter(
-          (note) => note._id !== action.payload.deletedNote._id,
+        const noteId = action.payload.deletedNote._id;
+        state.notes = state.notes.filter((note) => note._id !== noteId);
+
+        state.pinnedNotes = state.pinnedNotes.filter(
+          (note) => note._id !== noteId,
         );
       })
+      /* PIN NOTE */
       .addCase(pin_note.fulfilled, (state, action) => {
-        const updatedNote = action.payload;
+        const updatedNote = action.payload.data;
 
+        const index = state.notes.findIndex(
+          (note) => note._id === updatedNote._id,
+        );
+        if (index !== -1) {
+          state.notes[index] = updatedNote;
+        }
+        if (!updatedNote.isPinned) {
+          state.pinnedNotes = state.pinnedNotes.filter(
+            (note) => note._id !== updatedNote._id,
+          );
+        }
+      })
+      /* ARCHIVE NOTE */
+      .addCase(archive_note.fulfilled, (state, action) => {
+        const updatedNote = action.payload;
         const index = state.notes.findIndex(
           (note) => note._id == updatedNote.data._id,
         );
         state.notes[index] = updatedNote.data;
+      })
+      /* GETT ALL PINNED NOTE */
+      .addCase(get_pinned_notes.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(get_pinned_notes.fulfilled, (state, action) => {
+        state.pinnedNotes = action.payload;
+        state.loading = false;
+      })
+      .addCase(get_pinned_notes.rejected, (state) => {
+        state.error = "Something went wrong...";
       });
   },
 });
