@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { create_note } from "../redux/features/getAllNotesSlice";
 
-const CreateNote = () => {
+const CreateNote = ({ prop }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const { createLoading } = useSelector((state) => state.notesReducer);
-  
+  console.log(prop);
+
   const dispatch = useDispatch();
 
   function handleSubmit(e) {
@@ -21,6 +22,7 @@ const CreateNote = () => {
       dispatch(create_note({ title, description }));
       setTitle("");
       setDescription("");
+      prop(false);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +50,7 @@ const CreateNote = () => {
           type="submit"
           className="bg-primary py-3 rounded-2xl text-white font-medium active:scale-99 hover:cursor-pointer"
         >
-          {createLoading ? 'Creating Note...' : "Create"}
+          {createLoading ? "Creating Note..." : "Create"}
         </button>
       </form>
     </div>

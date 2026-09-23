@@ -9,11 +9,8 @@ import { get_notes } from "../redux/features/getAllNotesSlice";
 const AllNotes = () => {
   const dispatch = useDispatch();
   const [showCreateNote, setShowCreateNote] = useState(false);
-
   const { notes, loading, error } = useSelector((state) => state.notesReducer);
-
   const noteRef = useRef(null);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (noteRef.current && !noteRef.current.contains(event.target)) {
@@ -23,9 +20,7 @@ const AllNotes = () => {
 
     document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -35,11 +30,15 @@ const AllNotes = () => {
   if (loading) return <h2>Loading...</h2>;
   if (error) return <h2>{error}</h2>;
 
+  const sortedNotes = [...notes].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+  );
+
   return (
     <div className="h-full text-text">
       <div className="flex justify-between items-center">
         <PageTitle title={"All Notes"} count={`Total Notes: ${notes.length}`} />
-        <div className="relative">
+        <div className="relative" ref={noteRef}>
           <button onClick={() => setShowCreateNote((prev) => !prev)}>
             <MdAdd
               size={50}
@@ -48,18 +47,16 @@ const AllNotes = () => {
           </button>
           {showCreateNote && (
             <div className="absolute right-5 top-full z-50">
-              <CreateNote />
+              <CreateNote prop={setShowCreateNote} />
             </div>
           )}
         </div>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-        {notes.length === 0 ? (
+        {sortedNotes.length === 0 ? (
           <p>No notes found.</p>
         ) : (
-          notes.map((note,) => (
-            <NoteCard data={note} key={note._id} />
-          ))
+          sortedNotes.map((note) => <NoteCard data={note} key={note._id} />)
         )}
       </div>
     </div>

@@ -2,12 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { BsFillPinAngleFill, BsPinAngle } from "react-icons/bs";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoCopyOutline } from "react-icons/io5";
-import { RiUnpinFill } from "react-icons/ri";
 import { VscUnpin } from "react-icons/vsc";
 import { FaEdit } from "react-icons/fa";
 import { FaArchive } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   archive_note,
   delete_note,
@@ -17,7 +16,26 @@ import {
 const menuStyle =
   "w-full text-base px-4 py-2 flex gap-2 items-center text-left hover:bg-gray-100";
 
-const NoteCard = ({ data}) => {
+const colors = [
+  "#F3F4F6", // Soft Gray
+  "#FEF3C7", // Soft Amber
+  "#DBEAFE", // Soft Blue
+  "#DCFCE7", // Soft Green
+  "#FCE7F3", // Soft Pink
+  "#EDE9FE", // Soft Violet
+  "#CCFBF1", // Soft Teal
+  "#FFE4E6", // Soft Rose
+  "#FFEDD5", // Soft Orange
+  "#E0F2FE", // Soft Sky
+];
+
+const NoteCard = ({ data }) => {
+  const colorIndex =
+    [...String(data._id)].reduce((sum, char) => sum + char.charCodeAt(0), 0) %
+    colors.length;
+
+  const backgroundColor = colors[colorIndex];
+
   const date = new Date(data.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -37,11 +55,13 @@ const NoteCard = ({ data}) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   const dispatch = useDispatch();
 
   return (
     <div
-      className={`p-4 my-4 rounded-2xl flex flex-col justify-between bg-amber-100`}
+      className={`p-4 my-4 rounded-2xl flex flex-col justify-between`}
+      style={{ backgroundColor }}
     >
       <div className="flex flex-col justify-between items-start gap-1">
         <div className=" flex w-full justify-between ">

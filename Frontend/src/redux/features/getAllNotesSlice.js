@@ -144,7 +144,7 @@ const getNotesSlice = createSlice({
         const archivedIndex = state.archivedNotes.findIndex(
           (note) => note._id === updatedNote._id,
         );
-        
+
         if (archivedIndex !== -1) {
           state.archivedNotes[archivedIndex] = updatedNote;
         }
@@ -192,6 +192,7 @@ const getNotesSlice = createSlice({
         state.loading = true;
       })
       .addCase(get_archived_notes.fulfilled, (state, action) => {
+        state.loading = false;
         state.archivedNotes = action.payload;
       })
       .addCase(get_archived_notes.rejected, (state) => {
