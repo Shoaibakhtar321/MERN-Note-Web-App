@@ -57,8 +57,8 @@ const AllNotes = () => {
         {notes.length === 0 ? (
           <p>No notes found.</p>
         ) : (
-          notes.map((note, idx) => (
-            <NoteCard data={note} key={note._id} index={idx} id={note._id} />
+          notes.map((note,) => (
+            <NoteCard data={note} key={note._id} />
           ))
         )}
       </div>

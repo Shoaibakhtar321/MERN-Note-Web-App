@@ -3,6 +3,7 @@ import {
   archiveNote,
   createNoteApi,
   deleteNote,
+  getArchivedNotes,
   getNotes,
   getPinnedNotes,
   pinNote,
@@ -74,11 +75,20 @@ export const get_pinned_notes = createAsyncThunk("notes/pinned", async () => {
   return response.data;
 });
 
+export const get_archived_notes = createAsyncThunk(
+  "notes/archived",
+  async () => {
+    const response = await getArchivedNotes();
+    return response.data;
+  },
+);
+
 const getNotesSlice = createSlice({
   name: "notes",
   initialState: {
     notes: [],
     pinnedNotes: [],
+    archivedNotes: [],
     loading: false,
     error: null,
     createLoading: false,
@@ -109,9 +119,13 @@ const getNotesSlice = createSlice({
       /* DELETE NOTE */
       .addCase(delete_note.fulfilled, (state, action) => {
         const noteId = action.payload.deletedNote._id;
+
         state.notes = state.notes.filter((note) => note._id !== noteId);
 
         state.pinnedNotes = state.pinnedNotes.filter(
+          (note) => note._id !== noteId,
+        );
+        state.archivedNotes = state.archivedNotes.filter(
           (note) => note._id !== noteId,
         );
       })
@@ -122,9 +136,19 @@ const getNotesSlice = createSlice({
         const index = state.notes.findIndex(
           (note) => note._id === updatedNote._id,
         );
+
         if (index !== -1) {
           state.notes[index] = updatedNote;
         }
+
+        const archivedIndex = state.archivedNotes.findIndex(
+          (note) => note._id === updatedNote._id,
+        );
+        
+        if (archivedIndex !== -1) {
+          state.archivedNotes[archivedIndex] = updatedNote;
+        }
+
         if (!updatedNote.isPinned) {
           state.pinnedNotes = state.pinnedNotes.filter(
             (note) => note._id !== updatedNote._id,
@@ -133,13 +157,26 @@ const getNotesSlice = createSlice({
       })
       /* ARCHIVE NOTE */
       .addCase(archive_note.fulfilled, (state, action) => {
-        const updatedNote = action.payload;
+        const updatedNote = action.payload.data;
         const index = state.notes.findIndex(
-          (note) => note._id == updatedNote.data._id,
+          (note) => note._id === updatedNote._id,
         );
-        state.notes[index] = updatedNote.data;
+        const pinnedIndex = state.pinnedNotes.findIndex(
+          (note) => note._id === updatedNote._id,
+        );
+        if (index !== -1) {
+          state.notes[index] = updatedNote;
+        }
+        if (pinnedIndex !== -1) {
+          state.pinnedNotes[pinnedIndex] = updatedNote;
+        }
+        if (!updatedNote.isArchived) {
+          state.archivedNotes = state.archivedNotes.filter(
+            (note) => note._id !== updatedNote._id,
+          );
+        }
       })
-      /* GETT ALL PINNED NOTE */
+      /* GET ALL PINNED NOTE */
       .addCase(get_pinned_notes.pending, (state) => {
         state.loading = true;
       })
@@ -148,6 +185,16 @@ const getNotesSlice = createSlice({
         state.loading = false;
       })
       .addCase(get_pinned_notes.rejected, (state) => {
+        state.error = "Something went wrong...";
+      })
+      /* GET ALL ARCHIVED NOTES */
+      .addCase(get_archived_notes.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(get_archived_notes.fulfilled, (state, action) => {
+        state.archivedNotes = action.payload;
+      })
+      .addCase(get_archived_notes.rejected, (state) => {
         state.error = "Something went wrong...";
       });
   },

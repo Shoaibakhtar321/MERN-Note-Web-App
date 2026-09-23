@@ -32,3 +32,9 @@ export const getPinnedNotes = async () => {
   const response = await axios.get(`${API_KEY}/pinned-notes`);
   return response.data;
 };
+
+// GETTING ALL ARCHIVED NOTES
+export const getArchivedNotes = async () => {
+  const response = await axios.get(`${API_KEY}/archived-notes`);
+  return response.data;
+};
