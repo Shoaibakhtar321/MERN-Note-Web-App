@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdAdd } from "react-icons/md";
 import CreateNote from "./CreateNote";
 import { get_notes } from "../redux/features/getAllNotesSlice";
+import NoteCardSkeleton from "../skeleton/NoteCardSkeleton";
+import Error from "./Error";
 
 const AllNotes = () => {
   const dispatch = useDispatch();
@@ -27,8 +29,24 @@ const AllNotes = () => {
     dispatch(get_notes());
   }, [dispatch]);
 
-  if (loading) return <h2>Loading...</h2>;
-  if (error) return <h2>{error}</h2>;
+  function onRetry() {
+    dispatch(get_notes());
+  }
+
+  if (loading)
+    return (
+      <div className="pt-20 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+        {Array.from({ length: 8 }).map((_, idx) => (
+          <NoteCardSkeleton key={idx} />
+        ))}
+      </div>
+    );
+  if (error)
+    return (
+      <div className="pt-20">
+        <Error err={error} onRetry={onRetry} />
+      </div>
+    );
 
   const sortedNotes = [...notes].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
@@ -52,13 +70,23 @@ const AllNotes = () => {
           )}
         </div>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-        {sortedNotes.length === 0 ? (
-          <p>No notes found.</p>
-        ) : (
-          sortedNotes.map((note) => <NoteCard data={note} key={note._id} />)
-        )}
-      </div>
+
+      {sortedNotes.length === 0 ? (
+        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-neutral-200 bg-white px-6 text-center">
+          <h2 className="text-xl font-semibold text-neutral-900">
+            Create your first note
+          </h2>
+          <p className="mt-2 text-sm text-neutral-500">
+            Welcome to your notes gallery.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+          {sortedNotes.map((note) => (
+            <NoteCard data={note} key={note._id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

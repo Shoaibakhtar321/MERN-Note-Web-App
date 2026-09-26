@@ -60,7 +60,7 @@ const NoteCard = ({ data }) => {
 
   return (
     <div
-      className={`p-4 my-4 rounded-2xl flex flex-col justify-between`}
+      className={`p-4 rounded-2xl flex flex-col justify-between`}
       style={{ backgroundColor }}
     >
       <div className="flex flex-col justify-between items-start gap-1">

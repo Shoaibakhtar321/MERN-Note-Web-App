@@ -38,3 +38,9 @@ export const getArchivedNotes = async () => {
   const response = await axios.get(`${API_KEY}/archived-notes`);
   return response.data;
 };
+
+// SEARCH NOTE BY NAME
+export const searchNote = async (title) => {
+  const response = await axios.get(`${API_KEY}/search-note/?title=${title}`);
+  return response.data;
+};

@@ -7,6 +7,7 @@ import {
   getNotes,
   getPinnedNotes,
   pinNote,
+  searchNote,
 } from "../../api/notesApi";
 
 export const get_notes = createAsyncThunk("notes/getNotes", async () => {
@@ -83,6 +84,20 @@ export const get_archived_notes = createAsyncThunk(
   },
 );
 
+export const search_note = createAsyncThunk(
+  "note/search-note",
+  async (title, ThunkAPI) => {
+    try {
+      const response = await searchNote(title);
+      return response.note;
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to load note...",
+      );
+    }
+  },
+);
+
 const getNotesSlice = createSlice({
   name: "notes",
   initialState: {
@@ -102,6 +117,7 @@ const getNotesSlice = createSlice({
       })
       .addCase(get_notes.fulfilled, (state, action) => {
         state.notes = action.payload;
+        state.error = null;
         state.loading = false;
       })
       .addCase(get_notes.rejected, (state) => {
@@ -184,8 +200,8 @@ const getNotesSlice = createSlice({
         state.pinnedNotes = action.payload;
         state.loading = false;
       })
-      .addCase(get_pinned_notes.rejected, (state) => {
-        state.error = "Something went wrong...";
+      .addCase(get_pinned_notes.rejected, (state, action) => {
+        state.error = action.payload;
       })
       /* GET ALL ARCHIVED NOTES */
       .addCase(get_archived_notes.pending, (state) => {
@@ -197,6 +213,13 @@ const getNotesSlice = createSlice({
       })
       .addCase(get_archived_notes.rejected, (state) => {
         state.error = "Something went wrong...";
+      })
+      .addCase(search_note.fulfilled, (state, action) => {
+        state.notes = action.payload;
+        state.error = null;
+      })
+      .addCase(search_note.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

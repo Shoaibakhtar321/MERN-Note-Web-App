@@ -86,7 +86,7 @@ async function getNoteBySearch(req, res) {
     if (note.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "No notes found",
+        message: "No note found",
       });
     }
 
