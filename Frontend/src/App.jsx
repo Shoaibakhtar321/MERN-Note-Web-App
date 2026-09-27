@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AllNotes from "./pages/AllNotes";
 import Pinned from "./pages/Pinned";
 import Archived from "./pages/Archived";
-import Trash from "./pages/Trash";
 import Setting from "./pages/Setting";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
@@ -13,29 +12,26 @@ import ProviderContext from "./context/Provider";
 
 function App() {
   return (
-    <>
-      <ProviderContext>
-        <Provider store={store}>
-          <div className="w-screen h-screen bg-background text-text flex">
-            <div className=" h-full flex-1">
-              <Sidebar />
-            </div>
-            <div className="flex-6 flex flex-col">
-              <Navbar />
-              <div className="w-full h-full p-8">
+    <ProviderContext>
+      <Provider store={store}>
+        <div className="min-h-screen w-full bg-background text-text">
+          {/* Fixed sidebar */} <Sidebar /> {/* Main application area */}
+          <div className="min-w-0 md:ml-64">
+            <Navbar />
+            <main className="min-w-0 px-4 py-5 pb-24 sm:px-6 sm:py-6 md:pb-6 lg:px-8">
+              <div className="mx-auto w-full max-w-[1800px]">
                 <Routes>
                   <Route path="/" element={<AllNotes />} />
                   <Route path="/pinned" element={<Pinned />} />
                   <Route path="/archived" element={<Archived />} />
-                  <Route path="/trash" element={<Trash />} />
-                  <Route path="/setting" element={<Setting />} />
+                  <Route path="/settings" element={<Setting />} />
                 </Routes>
               </div>
-            </div>
+            </main>
           </div>
-        </Provider>
-      </ProviderContext>
-    </>
+        </div>
+      </Provider>
+    </ProviderContext>
   );
 }
 

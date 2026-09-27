@@ -2,33 +2,38 @@ import React from "react";
 
 const NoteCardSkeleton = () => {
   return (
-    <div className="p-4 rounded-2xl flex flex-col justify-between bg-neutral-100 animate-pulse">
-      {/* Top section */}
-      <div className="flex flex-col justify-between items-start gap-1">
-        <div className="flex w-full justify-between">
+    <article className="flex min-h-[220px] animate-pulse flex-col justify-between overflow-hidden rounded-2xl border border-black/5 bg-neutral-100 p-5 shadow-sm">
+      {/* Header */}
+      <div>
+        <div className="flex items-start justify-between gap-4">
           {/* Title */}
-          <div className="h-6 w-28 rounded bg-neutral-200" />
+          <div className="h-6 w-32 rounded-md bg-neutral-200" />
 
-          {/* Pin + menu */}
-          <div className="flex gap-3 items-center">
-            <div className="h-[18px] w-[18px] rounded bg-neutral-200" />
-            <div className="h-5 w-2 rounded bg-neutral-200" />
+          {/* Pin + Menu */}
+          <div className="flex shrink-0 items-center gap-1">
+            <div className="h-8 w-8 rounded-lg bg-neutral-200" />
+            <div className="h-8 w-8 rounded-lg bg-neutral-200" />
           </div>
         </div>
 
         {/* Description */}
-        <div className="py-3 w-full space-y-2">
-          <div className="h-4 w-[90%] rounded bg-neutral-200" />
-          <div className="h-4 w-[70%] rounded bg-neutral-200" />
+        <div className="mt-5 space-y-2">
+          <div className="h-4 w-full rounded-md bg-neutral-200" />
+          <div className="h-4 w-[92%] rounded-md bg-neutral-200" />
+          <div className="h-4 w-[76%] rounded-md bg-neutral-200" />
+          <div className="h-4 w-[58%] rounded-md bg-neutral-200" />
         </div>
       </div>
 
-      {/* Bottom section */}
-      <div className="flex justify-between items-center pt-2 border-t-2 border-neutral-200">
-        <div className="h-4 w-32 rounded bg-neutral-200" />
-        <div className="h-5 w-5 rounded bg-neutral-200" />
+      {/* Footer */}
+      <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
+        {/* Date */}
+        <div className="h-3.5 w-28 rounded-md bg-neutral-200" />
+
+        {/* Copy */}
+        <div className="h-8 w-14 rounded-lg bg-neutral-200" />
       </div>
-    </div>
+    </article>
   );
 };
 

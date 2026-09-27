@@ -44,3 +44,12 @@ export const searchNote = async (title) => {
   const response = await axios.get(`${API_KEY}/search-note/?title=${title}`);
   return response.data;
 };
+
+// UPDATE NOTE BY ID
+export const updateNote = async (data) => {
+  const response = await axios.patch(`${API_KEY}/note/${data.id}`, {
+    title: data.title,
+    description: data.description,
+  });
+  return response.data;
+};

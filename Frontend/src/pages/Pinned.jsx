@@ -30,39 +30,40 @@ const Pinned = () => {
 
   if (loading)
     return (
-      <div className="pt-20 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+      <div className="mt-25 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {Array.from({ length: 8 }).map((_, idx) => (
           <NoteCardSkeleton key={idx} />
         ))}
       </div>
     );
-  if (error)
+  if (error) {
     return (
-      <div className="pt-20">
+      <div className="flex min-h-[60vh] w-full items-center justify-center">
         <Error err={error} onRetry={onRetry} />
       </div>
     );
+  }
 
   return (
     <div>
-      <div>
+      <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <PageTitle
           title={"Pinned"}
           count={`Total Pinned Notes: ${displayPinnedNotes.length}`}
         />
-      </div>
+      </header>
       {displayPinnedNotes.length === 0 ? (
         <Error
           err={error ? error : "No pinned notes found"}
           onRetry={onRetry}
         />
-      ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+      ) : 
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {displayPinnedNotes.map((pinned) => (
             <NoteCard data={pinned} key={pinned._id} id={pinned._id} />
           ))}
         </div>
-      )}
+      }
     </div>
   );
 };

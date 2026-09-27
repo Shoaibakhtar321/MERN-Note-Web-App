@@ -8,6 +8,7 @@ import {
   getPinnedNotes,
   pinNote,
   searchNote,
+  updateNote,
 } from "../../api/notesApi";
 
 export const get_notes = createAsyncThunk("notes/getNotes", async () => {
@@ -98,6 +99,20 @@ export const search_note = createAsyncThunk(
   },
 );
 
+export const update_note = createAsyncThunk(
+  "note/update",
+  async (data, ThunkAPI) => {
+    try {
+      const response = await updateNote(data);
+      return response.note;
+    } catch (error) {
+      return ThunkAPI.rejectWithValue(
+        error.response?.data?.message || "Couldn't update note.",
+      );
+    }
+  },
+);
+
 const getNotesSlice = createSlice({
   name: "notes",
   initialState: {
@@ -131,6 +146,7 @@ const getNotesSlice = createSlice({
       .addCase(create_note.fulfilled, (state, action) => {
         state.createLoading = false;
         state.notes.unshift(action.payload);
+        console.log("note created");
       })
       /* DELETE NOTE */
       .addCase(delete_note.fulfilled, (state, action) => {
@@ -214,12 +230,40 @@ const getNotesSlice = createSlice({
       .addCase(get_archived_notes.rejected, (state) => {
         state.error = "Something went wrong...";
       })
+      /* SEARCH NOTE */
       .addCase(search_note.fulfilled, (state, action) => {
         state.notes = action.payload;
         state.error = null;
       })
       .addCase(search_note.rejected, (state, action) => {
         state.error = action.payload;
+      })
+      /* UPDATE NOTE BY ID */
+      .addCase(update_note.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(update_note.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.notes.findIndex(
+          (note) => note._id === action.payload._id,
+        );
+        if (index !== -1) {
+          state.notes[index] = action.payload;
+        }
+
+        const pinIndex = state.pinnedNotes.findIndex(
+          (pin) => pin._id === action.payload._id,
+        );
+        if (pinIndex !== -1) {
+          state.pinnedNotes[pinIndex] = action.payload;
+        }
+
+        const archiveIndex = state.archivedNotes.findIndex(
+          (archive) => archive._id === action.payload._id,
+        );
+        if (archiveIndex !== -1) {
+          state.archivedNotes[archiveIndex] = action.payload;
+        }
       });
   },
 });

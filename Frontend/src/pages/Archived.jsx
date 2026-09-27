@@ -29,7 +29,7 @@ const Archived = () => {
 
   if (loading)
     return (
-      <div className="pt-20 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+      <div className="mt-25 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {Array.from({ length: 8 }).map((_, idx) => (
           <NoteCardSkeleton key={idx} />
         ))}
@@ -43,16 +43,19 @@ const Archived = () => {
     );
   return (
     <div>
-      <div>
+      <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <PageTitle
           title={"Archived"}
           count={`Total Archived Notes: ${displayArchivedNotes.length}`}
         />
-      </div>
+      </header>
       {displayArchivedNotes.length === 0 ? (
-        <Error err={error ? error : "No archived notes found."} onRetry={onRetry} />
+        <Error
+          err={error ? error : "No archived notes found."}
+          onRetry={onRetry}
+        />
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {displayArchivedNotes.map((pinned) => (
             <NoteCard data={pinned} key={pinned._id} />
           ))}
