@@ -24,7 +24,6 @@ function App() {
                   <Route path="/" element={<AllNotes />} />
                   <Route path="/pinned" element={<Pinned />} />
                   <Route path="/archived" element={<Archived />} />
-                  <Route path="/settings" element={<Setting />} />
                 </Routes>
               </div>
             </main>

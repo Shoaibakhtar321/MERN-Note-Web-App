@@ -29,11 +29,11 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-border bg-background/90 px-4 py-3 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-30 w-full border-b border-border bg-background px-4 py-3 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-center">
         {/* Search */}
-        <div className="group flex w-full max-w-2xl items-center gap-2 rounded-xl border border-transparent bg-neutral-100 px-3 py-2.5 transition-all duration-200 focus-within:border-primary/30 focus-within:bg-white focus-within:ring-4 focus-within:ring-primary/5">
-          <IoSearch className="shrink-0 text-xl text-neutral-400 transition-colors duration-200 group-focus-within:text-primary" />
+        <div className="group flex w-full max-w-2xl items-center gap-2 rounded-xl border border-transparent bg-surface-secondary px-3 py-2.5 transition-all duration-200 focus-within:border-primary/30 focus-within:bg-surface focus-within:ring-4 focus-within:ring-primary/5">
+          <IoSearch className="shrink-0 text-xl text-text-secondary transition-colors duration-200 group-focus-within:text-primary" />
 
           <input
             type="text"
@@ -41,7 +41,7 @@ const Navbar = () => {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search notes by title..."
             aria-label="Search notes"
-            className="min-w-0 flex-1 bg-transparent px-1 text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
+            className="min-w-0 flex-1 bg-transparent px-1 text-sm text-text-primary outline-none placeholder:text-text-muted"
           />
 
           {search && (
@@ -49,14 +49,14 @@ const Navbar = () => {
               type="button"
               onClick={clearSearch}
               aria-label="Clear search"
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-neutral-200 hover:text-neutral-700"
+              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-text-primary transition-colors hover:bg-surface-secondary hover:text-text-secondary"
             >
               <MdClose className="text-lg" />
             </button>
           )}
 
           {!search && (
-            <span className="hidden rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-neutral-400 sm:block">
+            <span className="hidden rounded-md border border-border bg-surface px-2 py-1 text-[11px] font-medium text-text-muted sm:block">
               Search
             </span>
           )}

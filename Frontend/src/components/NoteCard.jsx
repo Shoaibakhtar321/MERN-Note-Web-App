@@ -19,16 +19,16 @@ import {
 import EditNote from "./EditNote";
 
 const colors = [
-  "#F3F4F6",
-  "#FEF3C7",
-  "#DBEAFE",
-  "#DCFCE7",
-  "#FCE7F3",
-  "#EDE9FE",
-  "#CCFBF1",
-  "#FFE4E6",
-  "#FFEDD5",
-  "#E0F2FE",
+  "bg-note-1",
+  "bg-note-2",
+  "bg-note-3",
+  "bg-note-4",
+  "bg-note-5",
+  "bg-note-6",
+  "bg-note-7",
+  "bg-note-8",
+  "bg-note-9",
+  "bg-note-10",
 ];
 
 const NoteCard = ({ data }) => {
@@ -107,14 +107,13 @@ const NoteCard = ({ data }) => {
   return (
     <>
       <article
-        className="group flex min-h-[220px] flex-col justify-between rounded-2xl border border-black/5 p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
-        style={{ backgroundColor }}
+        className={`group flex min-h-[220px] flex-col justify-between rounded-2xl border border-border-light p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${backgroundColor}`}
       >
         <div>
           <div className="flex items-start justify-between gap-2">
             <h3
               title={data.title}
-              className="min-w-0 flex-1 break-words text-lg font-semibold leading-6 tracking-tight text-neutral-900"
+              className="min-w-0 flex-1 break-words text-lg font-semibold leading-6 tracking-tight text-text-primary"
             >
               {data.title}
             </h3>
@@ -124,10 +123,10 @@ const NoteCard = ({ data }) => {
                 type="button"
                 onClick={handlePin}
                 aria-label={data.isPinned ? "Unpin note" : "Pin note"}
-                className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-200 cursor-pointer ${
+                className={`flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg active:scale-90 transition-all duration-200 ${
                   data.isPinned
-                    ? "text-red-500 hover:bg-white/60"
-                    : "text-neutral-700 hover:bg-white/60"
+                    ? "text-danger hover:bg-surface-secondary"
+                    : "text-text-secondary hover:bg-surface-secondary"
                 }`}
               >
                 {data.isPinned ? (
@@ -143,17 +142,17 @@ const NoteCard = ({ data }) => {
                   onClick={() => setOpen((prev) => !prev)}
                   aria-label="Note options"
                   aria-expanded={open}
-                  className="flex cursor-pointer h-8 w-8 items-center justify-center rounded-lg text-neutral-700 transition-colors hover:bg-white/60"
+                  className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-text-secondary transition-colors hover:bg-surface-secondary"
                 >
                   <BsThreeDotsVertical className="text-lg" />
                 </button>
 
                 {open && (
-                  <div className="absolute right-0 top-10 z-40 w-40 rounded-xl border border-neutral-200 bg-white py-1.5 shadow-xl">
+                  <div className="absolute right-0 top-10 z-40 w-40 rounded-xl border border-border bg-surface py-1.5 shadow-xl">
                     <button
                       type="button"
                       onClick={handleEdit}
-                      className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100"
+                      className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-text-secondary transition-colors hover:bg-surface-secondary"
                     >
                       <FaEdit className="text-sm" />
                       <span>Edit</span>
@@ -166,7 +165,7 @@ const NoteCard = ({ data }) => {
                         handlePin();
                         setOpen(false);
                       }}
-                      className="flex cursor-pointer w-full items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100"
+                      className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-text-secondary transition-colors hover:bg-surface-secondary"
                     >
                       {data.isPinned ? (
                         <VscUnpin className="text-base" />
@@ -181,20 +180,20 @@ const NoteCard = ({ data }) => {
                     <button
                       type="button"
                       onClick={handleArchive}
-                      className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100"
+                      className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-text-secondary transition-colors hover:bg-surface-secondary"
                     >
                       <FaArchive className="text-sm" />
 
                       <span>{data.isArchived ? "Unarchive" : "Archive"}</span>
                     </button>
 
-                    <div className="my-1 border-t border-neutral-100" />
+                    <div className="my-1 border-t border-border-light" />
 
                     {/* Delete */}
                     <button
                       type="button"
                       onClick={handleDelete}
-                      className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-red-500 transition-colors hover:bg-red-50"
+                      className="flex w-full cursor-pointer items-center gap-3 px-4 py-2.5 text-left text-sm font-medium text-danger transition-colors hover:bg-danger/10"
                     >
                       <FaTrashAlt className="text-sm" />
                       <span>Delete</span>
@@ -206,24 +205,26 @@ const NoteCard = ({ data }) => {
           </div>
 
           {/* Description */}
-          <p className="mt-4 line-clamp-5 text-sm leading-6 text-neutral-700/90">
+          <p className="mt-4 line-clamp-5 text-sm leading-6 text-text-secondary">
             {data.description}
           </p>
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-4">
-          <time className="text-xs font-medium text-neutral-600">{date}</time>
+        <div className="mt-6 flex items-center justify-between border-t border-text-muted pt-4">
+          <time className="text-xs font-medium text-text-secondary">
+            {date}
+          </time>
 
           <button
             type="button"
             onClick={handleCopy}
             aria-label="Copy note"
-            className="group/copy flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-neutral-500 transition-all hover:bg-white/60 hover:text-neutral-800"
+            className="group/copy flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-text-muted transition-all hover:bg-surface-secondary hover:text-text-primary active:scale-90 cursor-pointer"
           >
             {copied ? (
               <>
-                <MdCheck className="text-base" />
+                <MdCheck className="text-base text-success" />
                 <span>Copied</span>
               </>
             ) : (
@@ -239,7 +240,7 @@ const NoteCard = ({ data }) => {
       {/* Edit Modal */}
       {showEdit && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/30 px-4 py-6 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-overlay px-4 py-6 backdrop-blur-sm"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
               setShowEdit(false);

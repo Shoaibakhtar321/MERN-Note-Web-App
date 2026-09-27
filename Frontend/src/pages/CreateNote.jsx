@@ -53,19 +53,19 @@ const CreateNote = ({ prop }) => {
   return (
     <div
       className="
-        w-[calc(100vw-2rem)]
-        max-w-[400px]
-        overflow-hidden
-        rounded-2xl
-        border border-white/60
-        bg-white/85
-        p-1
-        shadow-[0_20px_60px_rgba(0,0,0,0.12)]
-        backdrop-blur-2xl
-      "
+      w-[calc(100vw-2rem)]
+      max-w-[400px]
+      overflow-hidden
+      rounded-2xl
+      border border-border-light
+      bg-surface/85
+      p-1
+      shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+      backdrop-blur-2xl
+    "
     >
       {/* Inner glass surface */}
-      <div className="rounded-xl bg-white/60 p-4 sm:p-5">
+      <div className="rounded-xl bg-surface/60 p-4 sm:p-5">
         {/* Header */}
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
@@ -75,11 +75,11 @@ const CreateNote = ({ prop }) => {
               </div>
 
               <div>
-                <h2 className="text-base font-semibold tracking-tight text-neutral-900">
+                <h2 className="text-base font-semibold tracking-tight text-text-primary">
                   Create Note
                 </h2>
 
-                <p className="mt-0.5 text-xs text-neutral-400">
+                <p className="mt-0.5 text-xs text-text-muted">
                   Capture something worth remembering.
                 </p>
               </div>
@@ -91,14 +91,14 @@ const CreateNote = ({ prop }) => {
             onClick={() => prop(false)}
             aria-label="Close create note"
             className="
-              flex h-8 w-8 shrink-0 items-center justify-center
-              rounded-lg
-              text-neutral-400
-              transition-all duration-200
-              hover:bg-neutral-100
-              hover:text-red-500 cursor-pointer
-              active:scale-95
-            "
+            flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center
+            rounded-lg
+            text-text-muted
+            transition-all duration-200
+            hover:bg-surface-secondary
+            hover:text-danger
+            active:scale-95
+          "
           >
             <MdClose className="text-xl" />
           </button>
@@ -109,7 +109,7 @@ const CreateNote = ({ prop }) => {
             <div className="mb-2 flex items-center justify-between">
               <label
                 htmlFor="note-title"
-                className="text-xs font-semibold text-neutral-700"
+                className="text-xs font-semibold text-text-secondary"
               >
                 Title
               </label>
@@ -117,10 +117,10 @@ const CreateNote = ({ prop }) => {
               <span
                 className={`text-[11px] font-medium ${
                   titleError
-                    ? "text-red-500"
+                    ? "text-danger"
                     : title.length > titleLimit - 5
-                      ? "text-amber-500"
-                      : "text-neutral-400"
+                      ? "text-warning"
+                      : "text-text-muted"
                 }`}
               >
                 {title.length}/{titleLimit}
@@ -143,23 +143,23 @@ const CreateNote = ({ prop }) => {
                 );
               }}
               className={`
-                w-full rounded-xl border
-                bg-neutral-50/80
-                px-3.5 py-3
-                text-sm text-neutral-900
-                outline-none
-                transition-all duration-200
-                placeholder:text-neutral-400
-                ${
-                  titleError
-                    ? "border-red-300 bg-red-50/40 focus:border-red-400 focus:ring-4 focus:ring-red-500/5"
-                    : "border-neutral-200 focus:border-primary/30 focus:bg-white focus:ring-4 focus:ring-primary/5"
-                }
-              `}
+              w-full rounded-xl border
+              bg-surface-secondary/80
+              px-3.5 py-3
+              text-sm text-text-primary
+              outline-none
+              transition-all duration-200
+              placeholder:text-text-muted
+              ${
+                titleError
+                  ? "border-danger bg-danger/10 focus:border-danger focus:ring-4 focus:ring-danger/5"
+                  : "border-border focus:border-primary/30 focus:bg-surface focus:ring-4 focus:ring-primary/5"
+              }
+            `}
             />
 
             {titleError && (
-              <p className="mt-1.5 text-[11px] font-medium text-red-500">
+              <p className="mt-1.5 text-[11px] font-medium text-danger">
                 Title cannot exceed {titleLimit} characters.
               </p>
             )}
@@ -170,7 +170,7 @@ const CreateNote = ({ prop }) => {
             <div className="mb-2 flex items-center justify-between">
               <label
                 htmlFor="note-description"
-                className="text-xs font-semibold text-neutral-700"
+                className="text-xs font-semibold text-text-secondary"
               >
                 Description
               </label>
@@ -178,10 +178,10 @@ const CreateNote = ({ prop }) => {
               <span
                 className={`text-[11px] font-medium ${
                   descriptionError
-                    ? "text-red-500"
+                    ? "text-danger"
                     : description.length > descriptionLimit - 20
-                      ? "text-amber-500"
-                      : "text-neutral-400"
+                      ? "text-warning"
+                      : "text-text-muted"
                 }`}
               >
                 {description.length}/{descriptionLimit}
@@ -203,23 +203,23 @@ const CreateNote = ({ prop }) => {
                 );
               }}
               className={`
-                w-full resize-none rounded-xl border
-                bg-neutral-50/80
-                px-3.5 py-3
-                text-sm leading-6 text-neutral-900
-                outline-none
-                transition-all duration-200
-                placeholder:text-neutral-400
-                ${
-                  descriptionError
-                    ? "border-red-300 bg-red-50/40 focus:border-red-400 focus:ring-4 focus:ring-red-500/5"
-                    : "border-neutral-200 focus:border-primary/30 focus:bg-white focus:ring-4 focus:ring-primary/5"
-                }
-              `}
+              w-full resize-none rounded-xl border
+              bg-surface-secondary/80
+              px-3.5 py-3
+              text-sm leading-6 text-text-primary
+              outline-none
+              transition-all duration-200
+              placeholder:text-text-muted
+              ${
+                descriptionError
+                  ? "border-danger bg-danger/10 focus:border-danger focus:ring-4 focus:ring-danger/5"
+                  : "border-border focus:border-primary/30 focus:bg-surface focus:ring-4 focus:ring-primary/5"
+              }
+            `}
             />
 
             {descriptionError && (
-              <p className="mt-1.5 text-[11px] font-medium text-red-500">
+              <p className="mt-1.5 text-[11px] font-medium text-danger">
                 Description cannot exceed {descriptionLimit} characters.
               </p>
             )}
@@ -231,13 +231,17 @@ const CreateNote = ({ prop }) => {
               onClick={() => prop(false)}
               disabled={createLoading}
               className="
-                flex-1 rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-neutral-600 transition-all duration-200
-                hover:bg-neutral-50
-                hover:text-neutral-900
-                active:scale-[0.98]
-                disabled:cursor-not-allowed
-                disabled:opacity-50
-              "
+              flex-1 rounded-xl border border-border
+              bg-surface
+              px-4 py-2.5
+              text-sm font-medium text-text-secondary
+              transition-all duration-200
+              hover:bg-surface-secondary
+              hover:text-text-primary
+              active:scale-[0.98]
+              disabled:cursor-not-allowed
+              disabled:opacity-50
+            "
             >
               Cancel
             </button>
@@ -246,21 +250,21 @@ const CreateNote = ({ prop }) => {
               type="submit"
               disabled={isDisabled}
               className="
-                flex flex-1 items-center justify-center gap-2
-                rounded-xl
-                bg-primary
-                px-4 py-2.5
-                text-sm font-medium text-white
-                shadow-sm
-                transition-all duration-200
-                hover:-translate-y-0.5
-                hover:shadow-md
-                active:scale-[0.98]
-                disabled:cursor-not-allowed
-                disabled:opacity-50
-                disabled:hover:translate-y-0
-                disabled:hover:shadow-sm
-              "
+              flex flex-1 items-center justify-center gap-2
+              rounded-xl
+              bg-primary
+              px-4 py-2.5
+              text-sm font-medium text-white
+              shadow-sm
+              transition-all duration-200
+              hover:-translate-y-0.5
+              hover:shadow-md
+              active:scale-[0.98]
+              disabled:cursor-not-allowed
+              disabled:opacity-50
+              disabled:hover:translate-y-0
+              disabled:hover:shadow-sm
+            "
             >
               {createLoading ? (
                 <>

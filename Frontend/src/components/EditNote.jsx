@@ -48,14 +48,13 @@ const EditNote = ({ onClose, data }) => {
 
   return (
     <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-border bg-background shadow-xl">
-      {/* Header */}
       <div className="flex items-start justify-between border-b border-border px-5 py-4 sm:px-6">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-neutral-900 sm:text-xl">
+          <h2 className="text-lg font-semibold tracking-tight text-text-primary sm:text-xl">
             Edit Note
           </h2>
 
-          <p className="mt-1 text-sm text-neutral-500">
+          <p className="mt-1 text-sm text-text-secondary">
             Make changes to your note and save them when you're done.
           </p>
         </div>
@@ -64,27 +63,25 @@ const EditNote = ({ onClose, data }) => {
           type="button"
           onClick={onClose}
           aria-label="Close edit note"
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-700"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-surface-secondary hover:text-text-secondary cursor-pointer"
         >
           <MdClose className="text-xl" />
         </button>
       </div>
 
-      {/* Form */}
       <form onSubmit={handleSave} className="space-y-5 p-5 sm:p-6">
-        {/* Title */}
         <div>
           <div className="mb-2 flex items-center justify-between">
             <label
               htmlFor="edit-note-title"
-              className="text-sm font-medium text-neutral-700"
+              className="text-sm font-medium text-text-secondary"
             >
               Title
             </label>
 
             <span
               className={`text-xs ${
-                titleError ? "font-medium text-red-500" : "text-neutral-400"
+                titleError ? "font-medium text-danger" : "text-text-muted"
               }`}
             >
               {title.length}/{titleLimit}
@@ -99,15 +96,15 @@ const EditNote = ({ onClose, data }) => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter note title"
             autoFocus
-            className={`w-full rounded-xl border bg-neutral-50 px-4 py-3 text-sm text-neutral-900 outline-none transition-all placeholder:text-neutral-400 ${
+            className={`w-full rounded-xl border bg-surface-secondary px-4 py-3 text-sm text-text-primary outline-none transition-all placeholder:text-text-muted ${
               titleError
-                ? "border-red-300 bg-red-50/50 focus:border-red-400"
-                : "border-neutral-200 focus:border-primary/40 focus:bg-white focus:ring-4 focus:ring-primary/5"
+                ? "border-danger bg-danger/10 focus:border-danger"
+                : "border-border focus:border-primary/40 focus:bg-surface focus:ring-4 focus:ring-primary/5"
             }`}
           />
 
           {titleError && (
-            <p className="mt-1.5 text-xs text-red-500">
+            <p className="mt-1.5 text-xs text-danger">
               Title cannot be longer than {titleLimit} characters.
             </p>
           )}
@@ -118,16 +115,14 @@ const EditNote = ({ onClose, data }) => {
           <div className="mb-2 flex items-center justify-between">
             <label
               htmlFor="edit-note-description"
-              className="text-sm font-medium text-neutral-700"
+              className="text-sm font-medium text-text-secondary"
             >
               Description
             </label>
 
             <span
               className={`text-xs ${
-                descriptionError
-                  ? "font-medium text-red-500"
-                  : "text-neutral-400"
+                descriptionError ? "font-medium text-danger" : "text-text-muted"
               }`}
             >
               {description.length}/{descriptionLimit}
@@ -141,15 +136,15 @@ const EditNote = ({ onClose, data }) => {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Write something about your note..."
             rows={7}
-            className={`w-full resize-none rounded-xl border bg-neutral-50 px-4 py-3 text-sm leading-6 text-neutral-900 outline-none transition-all placeholder:text-neutral-400 ${
+            className={`w-full resize-none rounded-xl border bg-surface-secondary px-4 py-3 text-sm leading-6 text-text-primary outline-none transition-all placeholder:text-text-muted ${
               descriptionError
-                ? "border-red-300 bg-red-50/50 focus:border-red-400"
-                : "border-neutral-200 focus:border-primary/40 focus:bg-white focus:ring-4 focus:ring-primary/5"
+                ? "border-danger bg-danger/10 focus:border-danger"
+                : "border-border focus:border-primary/40 focus:bg-surface focus:ring-4 focus:ring-primary/5"
             }`}
           />
 
           {descriptionError && (
-            <p className="mt-1.5 text-xs text-red-500">
+            <p className="mt-1.5 text-xs text-danger">
               Description cannot be longer than {descriptionLimit} characters.
             </p>
           )}
@@ -161,7 +156,7 @@ const EditNote = ({ onClose, data }) => {
             type="button"
             onClick={onClose}
             disabled={isSaving}
-            className="w-full rounded-xl px-5 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="w-full rounded-xl px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-secondary disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             Cancel
           </button>
@@ -169,7 +164,7 @@ const EditNote = ({ onClose, data }) => {
           <button
             type="submit"
             disabled={hasError || !title.trim() || isSaving}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto cursor-pointer"
           >
             <MdCheck className="text-lg" />
             {isSaving ? "Saving..." : "Save Changes"}

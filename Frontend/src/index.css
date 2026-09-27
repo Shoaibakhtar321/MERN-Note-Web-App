@@ -4,10 +4,129 @@
 @import "@fontsource/poppins/600.css";
 @import "@fontsource/poppins/700.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Brand */
+  --color-primary: #5c45d3;
+  --color-primary-hover: #4d38c2;
+  --color-primary-light: #c2b4fc;
+
+  /* Backgrounds */
+  --color-background: #fefefe;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f1f1f1;
+
+  /* Text */
+  --color-text-primary: #222222;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+
+  /* Borders */
+  --color-border: #c4c4c4;
+  --color-border-light: #e5e5e5;
+
+  /* Status */
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-info: #2563eb;
+
+  /* Other */
+  --color-overlay: rgb(0 0 0 / 0.5);
+}
+
+.dark {
+  /* Brand */
+  --color-primary: #8b7bea;
+  --color-primary-hover: #9d90f0;
+  --color-primary-light: #292344;
+
+  /* Backgrounds */
+  --color-background: #111113;
+  --color-surface: #18181b;
+  --color-surface-secondary: #222225;
+
+  /* Text */
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #b5b5b5;
+  --color-text-muted: #777777;
+
+  /* Borders */
+  --color-border: #3f3f46;
+  --color-border-light: #2a2a2d;
+
+  /* Status */
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+  --color-info: #60a5fa;
+
+  /* Other */
+  --color-overlay: rgb(0 0 0 / 0.7);
+}
+
 @theme {
   --font-sans: "Poppins", sans-serif;
-  --color-primary: #5c45d3;
-  --color-background: #fefefe;
-  --color-text: #222222;
-  --color-border: #c4c4c4;
+
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-light: var(--color-primary-light);
+
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-secondary: var(--color-surface-secondary);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+
+  --color-border: var(--color-border);
+  --color-border-light: var(--color-border-light);
+
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+  --color-info: var(--color-info);
+}
+
+:root {
+  /* Premium Note Colors */
+  --color-note-1: #eeeae2; /* Champagne */
+  --color-note-2: #f6dfae; /* Gold */
+  --color-note-3: #c5dcf1; /* Cobalt Mist */
+  --color-note-4: #c5e1ce; /* Jade */
+  --color-note-5: #edc8d5; /* Blush */
+  --color-note-6: #d5c7ec; /* Amethyst */
+  --color-note-7: #b0ddd6; /* Turquoise */
+  --color-note-8: #e2bbc3; /* Garnet */
+  --color-note-9: #efc9a4; /* Copper */
+  --color-note-10: #b9d7e7; /* Azure */
+}
+
+.dark {
+  /* Premium Note Colors */
+  --color-note-1: #34302b; /* Warm Charcoal */
+  --color-note-2: #594522; /* Antique Gold */
+  --color-note-3: #243e5c; /* Sapphire */
+  --color-note-4: #214936; /* Emerald */
+  --color-note-5: #542f40; /* Ruby Rose */
+  --color-note-6: #403064; /* Royal Purple */
+  --color-note-7: #1f4b48; /* Deep Teal */
+  --color-note-8: #572e36; /* Burgundy */
+  --color-note-9: #5a3922; /* Burnished Amber */
+  --color-note-10: #24465a; /* Ocean Blue */
+}
+
+@theme {
+  --color-note-1: var(--color-note-1);
+  --color-note-2: var(--color-note-2);
+  --color-note-3: var(--color-note-3);
+  --color-note-4: var(--color-note-4);
+  --color-note-5: var(--color-note-5);
+  --color-note-6: var(--color-note-6);
+  --color-note-7: var(--color-note-7);
+  --color-note-8: var(--color-note-8);
+  --color-note-9: var(--color-note-9);
+  --color-note-10: var(--color-note-10);
 }

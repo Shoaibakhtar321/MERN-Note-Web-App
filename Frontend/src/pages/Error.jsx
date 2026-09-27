@@ -4,20 +4,20 @@ import { MdErrorOutline } from "react-icons/md";
 
 const Error = ({ onRetry, err }) => {
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-5">
-      <div className="flex flex-col items-center text-center max-w-md">
+    <div className="flex min-h-[70vh] items-center justify-center px-5">
+      <div className="flex max-w-md flex-col items-center text-center">
         {/* Error Icon */}
-        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-50 text-red-500">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-danger/10 text-danger">
           <MdErrorOutline size={34} />
         </div>
 
         {/* Heading */}
-        <h1 className="mt-6 text-2xl font-semibold text-text">
+        <h1 className="mt-6 text-2xl font-semibold text-text-primary">
           {err ? err : "Something went wrong"}
         </h1>
 
         {/* Description */}
-        <p className="mt-2 text-text/60 leading-relaxed">
+        <p className="mt-2 leading-relaxed text-text-secondary">
           {err
             ? "We couldn't find your notes right now."
             : "We couldn't load your notes right now. Please try again in a moment."}
@@ -33,14 +33,14 @@ const Error = ({ onRetry, err }) => {
             inline-flex
             items-center
             gap-2
-            px-5
-            py-2.5
             rounded-xl
             bg-primary
-            text-white
+            px-5
+            py-2.5
             font-medium
+            text-white
             transition
-            hover:opacity-90
+            hover:bg-primary-hover
             active:scale-95
           "
           >

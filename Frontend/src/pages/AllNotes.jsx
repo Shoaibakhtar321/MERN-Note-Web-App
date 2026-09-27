@@ -65,24 +65,24 @@ const AllNotes = () => {
   }
 
   return (
-    <main className="w-full text-text">
+    <main className="w-full text-text-primary">
       <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <PageTitle title="All Notes" count={`Total Notes: ${notes.length}`} />
 
-        <div ref={noteRef} className="relative self-start sm:self-auto ">
+        <div ref={noteRef} className="relative self-start sm:self-auto">
           <button
             type="button"
             onClick={() => setShowCreateNote((prev) => !prev)}
             aria-label="Create a new note"
             aria-expanded={showCreateNote}
-            className=" cursor-pointer group flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95"
+            className="group flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95"
           >
             <MdAdd className="text-xl transition-transform duration-200 group-hover:rotate-90" />
             <span>New Note</span>
           </button>
 
           {showCreateNote && (
-            <div className="md:absolute md:right-20 top-[calc(100%+10px)] z-50 w-[calc(100vw-2rem)] max-w-[380px] sm:w-[350px]">
+            <div className="top-[calc(100%+10px)] z-50 w-[calc(100vw-2rem)] max-w-[380px] sm:w-[350px] md:absolute md:right-20">
               <CreateNote prop={setShowCreateNote} />
             </div>
           )}
@@ -105,16 +105,16 @@ const AllNotes = () => {
 
 const EmptyNotes = ({ onCreate }) => {
   return (
-    <section className="flex min-h-[360px] w-full flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-300 bg-neutral-50/70 px-6 text-center">
+    <section className="flex min-h-[360px] w-full flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface-secondary/70 px-6 text-center">
       <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
         <LuPlus className="text-2xl" />
       </div>
 
-      <h2 className="text-lg font-semibold tracking-tight text-neutral-900 sm:text-xl">
+      <h2 className="text-lg font-semibold tracking-tight text-text-primary sm:text-xl">
         No notes yet
       </h2>
 
-      <p className="mt-2 max-w-sm text-sm leading-6 text-neutral-500">
+      <p className="mt-2 max-w-sm text-sm leading-6 text-text-secondary">
         Start capturing your ideas, tasks, and thoughts by creating your first
         note.
       </p>
