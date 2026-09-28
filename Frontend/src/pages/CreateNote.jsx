@@ -4,6 +4,7 @@ import { MdAdd, MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { create_note } from "../redux/features/getAllNotesSlice";
 import { ErrorContext } from "../context/Provider";
+import { toast } from "sonner";
 
 const CreateNote = ({ prop }) => {
   const [title, setTitle] = useState("");
@@ -45,8 +46,10 @@ const CreateNote = ({ prop }) => {
       setDescription("");
       setUIError(false);
       prop(false);
+      toast.success("Note created successfully");
     } catch (error) {
       console.error("Failed to create note:", error);
+      toast.error("Try again...");
     }
   };
 

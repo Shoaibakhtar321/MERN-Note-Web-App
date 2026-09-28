@@ -7,6 +7,7 @@ import { MdDarkMode } from "react-icons/md";
 import { MdWbSunny } from "react-icons/md";
 import { PiArchiveDuotone } from "react-icons/pi";
 import { ThemeContext } from "../context/Provider";
+import { toast } from "sonner";
 
 const Sidebar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -120,8 +121,10 @@ const Sidebar = () => {
             </NavLink>
           ))}
 
-          <button className="justify-center md:hidden text-text-primary" aria-label="theme"
-          onClick={toggleTheme}
+          <button
+            className="justify-center md:hidden text-text-primary"
+            aria-label="theme"
+            onClick={toggleTheme}
           >
             {theme === "light" ? (
               <MdWbSunny className="text-[20px]" />
@@ -155,6 +158,11 @@ const Sidebar = () => {
             )}
           </button>
         </div>
+      </div>
+      <div className="hidden">
+        {theme === "light"
+          ? toast.success("Light theme enabled")
+          : toast.success("Dark theme enabled")}
       </div>
     </aside>
   );

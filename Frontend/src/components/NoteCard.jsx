@@ -17,6 +17,7 @@ import {
 } from "../redux/features/getAllNotesSlice";
 
 import EditNote from "./EditNote";
+import { toast } from "sonner";
 
 const colors = [
   "bg-note-1",
@@ -71,15 +72,26 @@ const NoteCard = ({ data }) => {
 
   const handlePin = () => {
     dispatch(pin_note(data._id));
+    if (!data.isPinned) {
+      toast.success("Note pinned");
+    } else {
+      toast.info("Note unpinned");
+    }
   };
 
   const handleArchive = () => {
     dispatch(archive_note(data._id));
+    if (!data.isArchived) {
+      toast.success("Note archived");
+    } else {
+      toast.info("Note unarchived");
+    }
     setOpen(false);
   };
 
   const handleDelete = () => {
     dispatch(delete_note(data._id));
+    toast.success("Note deleted");
     setOpen(false);
   };
 
