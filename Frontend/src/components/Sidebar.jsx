@@ -124,7 +124,14 @@ const Sidebar = () => {
           <button
             className="justify-center md:hidden text-text-primary"
             aria-label="theme"
-            onClick={toggleTheme}
+            onClick={() => {
+              toggleTheme();
+              if (theme === "light") {
+                toast.success("Dark theme enabled");
+              } else {
+                toast.success("Light theme enabled");
+              }
+            }}
           >
             {theme === "light" ? (
               <MdWbSunny className="text-[20px]" />
@@ -143,7 +150,14 @@ const Sidebar = () => {
 
           <button
             className={`${linkStyle} capitalize justify-center w-full cursor-pointer active:scale-90`}
-            onClick={toggleTheme}
+            onClick={() => {
+              toggleTheme();
+              if (theme === "light") {
+                toast.success("Dark theme enabled");
+              } else {
+                toast.success("Light theme enabled");
+              }
+            }}
           >
             {theme === "light" ? (
               <>
@@ -158,11 +172,6 @@ const Sidebar = () => {
             )}
           </button>
         </div>
-      </div>
-      <div className="hidden">
-        {theme === "light"
-          ? toast.success("Light theme enabled")
-          : toast.success("Dark theme enabled")}
       </div>
     </aside>
   );
