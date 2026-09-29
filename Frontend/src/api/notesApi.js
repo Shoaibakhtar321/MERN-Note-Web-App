@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = `${import.meta.env.API_URL}/api`;
+const API_KEY = `${import.meta.env.VITE_API_URL}/api`;
 
 export const getNotes = async () => {
   const response = await axios.get(`${API_KEY}/all-notes`);
