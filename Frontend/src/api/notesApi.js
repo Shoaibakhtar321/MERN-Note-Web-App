@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = "http://localhost:3000/api";
+const API_KEY = "https://mern-note-web-app.onrender.com";
 
 export const getNotes = async () => {
   const response = await axios.get(`${API_KEY}/all-notes`);
